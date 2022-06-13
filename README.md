@@ -8,6 +8,7 @@ UI screens/routes (Task 1) {4-5 days}:
   Login Page: To authorize the user for login  
   Admin Page: Some extended features for admin (Using default Django admin). 
   Home Page: Has a list of problems and a filter option to sort them based on solved status or difficulty. 
+  
   Problems Page: When clicked on any problem on the above page, takes you here; this page has the problem name, description, input field to code, selection dropdown                  to pick programming language, submit button and a dynamic banner to display the verdict. 
   Submission Page: Linked to the Problems page, which takes you to view your submissions of that particular problem. Shows submission time-stamps for each                              submission. 
   [Bonus] Profile Page : To display the basic information, performance ,score and problems solved by logged in user. 
