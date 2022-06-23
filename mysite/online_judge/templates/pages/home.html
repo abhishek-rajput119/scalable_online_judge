@@ -50,8 +50,21 @@
         </div>
     </nav>
     <div class="row mt-2">
-        <div class="col-3 bg-light">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt numquam culpa earum fugiat laboriosam consequatur? Maiores perferendis, minima fugit odio illo voluptates quod molestiae exercitationem natus, officia delectus doloremque rem?
+        <div class="list-group col-3 bg-light">
+            <div class="" style="padding: 2em;">
+                <h6 class="h6">SORT BY TOPIC:</h6>
+                <a class="list-group-item list-group-item-action" href="#list-item-1">Dynammic Programing</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-2">Stack & Queue</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-3">Binary Tree</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-4">Backtracking</a>
+            </div>
+            <div class="" style="padding: 2em;">
+                <h6 class="h6">SORT BY DIFFICULTY:</h6>
+                <a class="list-group-item list-group-item-action" href="#list-item-1">Basic</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-2">Easy</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-3">Medium</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-4">Hard</a>
+            </div>
         </div>
         <div class="col-9" style="height:500px;overflow: scroll;">
             {% for i in '0123456789'|make_list %}
