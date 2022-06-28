@@ -3,8 +3,12 @@ from . import views
 
 app_name = 'online_judge'
 urlpatterns = [
-    path('',views.index,name='login'),
-    path('home',views.home,name = 'home'),
-    path('submission',views.submission,name='submission'),
-    path('signup',views.signup,name='signup')
+    # /online_judge/
+    path('', views.user_login, name='login'),
+    # /online_judge/home
+    path('home', views.home, name='home'),
+    # /online_judge/problem/id
+    path('problem/<int:problem_id>', views.submission, name='submission'),
+    # /online_judge/signup
+    path('signup', views.signup, name='signup')
 ]

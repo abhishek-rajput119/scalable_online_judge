@@ -32,30 +32,30 @@
                                         <h4 class="mt-1 mb-5 pb-1">ONLINE JUDGE PROJECT</h4>
                                     </div>
 
-                                    <form>
+                                    <form role="form" enctype="multipart/form-data" method="post">
+                                        {% csrf_token %}
                                         <p>Please login to your account</p>
 
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Username</label>
-                                            <input type="email" id="form2Example11" class="form-control" placeholder="Username" />
+                                            <input name="username" type="text" id="form2Example11" class="form-control" placeholder="Username" />
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example22">Password</label>
-                                            <input type="password" id="form2Example22" class="form-control" />
+                                            <input name="password" type="password" id="form2Example22" class="form-control" />
                                         </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Login</button>
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Login</button>
                                         </div>
-
-                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                    </form>
+<div>
+    <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">Don't have an account?</p>
                                             <button type="button" class="btn btn-outline-danger"><a href="signup" id="signupButton">Create new</a></button>
                                         </div>
-
-                                    </form>
-
+</div>
                                 </div>
                             </div>
                             <div class="col-lg-6 bg-dark d-flex align-items-center">
