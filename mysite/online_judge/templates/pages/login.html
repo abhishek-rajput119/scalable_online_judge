@@ -15,6 +15,15 @@
         #signupButton:hover {
             color: white;
         }
+        
+        #admin {
+            text-decoration: none;
+            color: red;
+        }
+        
+        #admin:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -26,42 +35,47 @@
                     <div class="card rounded-3 text-black">
                         <div class="row g-0">
                             <div class="col-lg-6">
-                                <div class="card-body p-md-5 mx-md-4">
-
-                                    <div class="text-center">
-                                        <h4 class="mt-1 mb-5 pb-1">ONLINE JUDGE PROJECT</h4>
+                                <div class="row mt-4">
+                                    <div class="col-8"></div>
+                                    <div class="col-4">
+                                        <a id="admin" href="admin/" class=" ">Admin login</a>
+                                    </div>
+                                </div>
+                                <div class="card-body p-md-5 mx-md-4 ">
+                                    <div class="text-center ">
+                                        <h4 class="mt-1 mb-5 pb-1 ">ONLINE JUDGE PROJECT</h4>
                                     </div>
 
-                                    <form role="form" enctype="multipart/form-data" method="post">
+                                    <form role="form " enctype="multipart/form-data " method="post">
                                         {% csrf_token %}
                                         <p>Please login to your account</p>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Username</label>
-                                            <input name="username" type="text" id="form2Example11" class="form-control" placeholder="Username" />
+                                        <div class="form-outline mb-4 ">
+                                            <label class="form-label " for="form2Example11 ">Username</label>
+                                            <input name="username" type="text" id="form2Example11 " class="form-control" placeholder="Username"/>
                                         </div>
 
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example22">Password</label>
-                                            <input name="password" type="password" id="form2Example22" class="form-control" />
+                                        <div class="form-outline mb-4 ">
+                                            <label class="form-label " for="form2Example22 ">Password</label>
+                                            <input name="password" type="password" id="form2Example22 " class="form-control " />
                                         </div>
 
-                                        <div class="text-center pt-1 mb-5 pb-1">
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Login</button>
+                                        <div class="text-center pt-1 mb-5 pb-1 ">
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 " type="submit ">Login</button>
                                         </div>
                                     </form>
-<div>
-    <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <p class="mb-0 me-2">Don't have an account?</p>
-                                            <button type="button" class="btn btn-outline-danger"><a href="signup" id="signupButton">Create new</a></button>
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-center pb-4 ">
+                                            <p class="mb-0 me-2 ">Don't have an account?</p>
+                                            <button type="button " class="btn btn-outline-danger "><a href="signup " id="signupButton">Create new</a></button>
                                         </div>
-</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 bg-dark d-flex align-items-center">
-                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                    <h4 class="mb-4">ONLINE JUDGE</h4>
-                                    <p class="small mb-0">Online judge for programmers, where they can solve problems and submit there code for evaluation in different programming languages.
+                            <div class="col-lg-6 bg-dark d-flex align-items-center ">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4 ">
+                                    <h4 class="mb-4 ">ONLINE JUDGE</h4>
+                                    <p class="small mb-0 ">Online judge for programmers, where they can solve problems and submit there code for evaluation in different programming languages.
                                     </p>
                                 </div>
                             </div>

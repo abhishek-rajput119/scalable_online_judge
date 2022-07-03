@@ -1,10 +1,20 @@
 # Create your views here.
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+
 from .models import Problem
 from .forms import UserForm
+
+
+def user_logout(request):
+    # del request.session['user_id']
+    request.session.flush()
+    logout(request)
+    return user_login(request)
 
 
 def user_login(request):
@@ -17,7 +27,6 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                print(user)
 
                 problems = Problem.objects.all()
                 return render(request, 'pages/home.html', {'user': user, 'problems': problems})
@@ -66,8 +75,3 @@ def home(request):
 def submission(request, problem_id):
     problem = get_object_or_404(Problem, pk=problem_id)
     return render(request, 'pages/submission.html', {'problem': problem})
-
-
-
-
-
