@@ -21,20 +21,23 @@
             <div class="d-flex">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/online_judge/home">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="signup">Signup</a>
-                    </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="logout">Logout</a>
+                        <a class="nav-link active" aria-current="page" href="/online_judge/logout">Logout</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/online_judge/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/online_judge/signup">Signup</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
