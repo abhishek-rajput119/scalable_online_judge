@@ -1,11 +1,11 @@
 # Create your views here.
+import os
+
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
-
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+import subprocess
 from .models import Problem
 from .forms import UserForm
 
@@ -74,4 +74,91 @@ def home(request):
 
 def submission(request, problem_id):
     problem = get_object_or_404(Problem, pk=problem_id)
-    return render(request, 'pages/submission.html', {'problem': problem})
+    compiled = False
+    code_text = ""
+    if request.method == "POST":
+        verdict = False
+        compiled = True
+        user = request.user
+        code_text = request.POST['code']
+
+        f = open(f"codes/{user.id}_{problem_id}.cpp", "w")
+        f.write(code_text)
+        f.close()
+
+        f = open(f"codes/inputs/{problem_id}.txt", 'r')
+        input_text = f.read()
+        f.close()
+
+        coded_input_text = []
+        with open(f"codes/inputs/{problem_id}.txt") as f:
+            coded_input_text = [x.rstrip() for x in f]
+
+        print(coded_input_text)
+        f = open(f"codes/outputs/{problem_id}.txt", "r")
+        expected_output = f.read().strip()
+
+        # subprocess.run(['docker', 'ps'])
+        subprocess.run(['docker', 'cp', f'codes/{user.id}_{problem_id}.cpp', '764361bc5ec4:/a.cpp'], shell=True,
+                       capture_output=True)
+        output = subprocess.run(['docker', 'exec', '764361bc5ec4', 'g++', 'a.cpp'], shell=True,
+                                capture_output=True, text=True)
+
+        print(output.stderr)
+        if output.returncode == 0:
+            out = subprocess.run(['docker', 'exec', '-i', '764361bc5ec4', './a.out'], shell=True, capture_output=True,
+                                 text=True, input=input_text)
+            print(out)
+            subprocess.run(['docker', 'exec', '764361bc5ec4', 'rm', '-rf', 'a.out'], shell=True)
+            subprocess.run(['docker', 'exec', '764361bc5ec4', 'rm', '-rf', 'a.cpp'], shell=True)
+
+            with open(f"codes/outputs/{user.id}_{problem_id}.txt", "w") as f:
+                f.write(out.stdout)
+
+            with open(f"codes/outputs/{user.id}_{problem_id}.txt", "r") as f:
+                your_output = f.read().strip()
+
+            if os.path.exists(f"codes/outputs/{user.id}_{problem_id}.txt"):
+                os.remove(f"codes/outputs/{user.id}_{problem_id}.txt")
+            else:
+                print("The file does not exist")
+
+            if os.path.exists(f"codes/{user.id}_{problem_id}.cpp"):
+                os.remove(f"codes/{user.id}_{problem_id}.cpp")
+            else:
+                print("The file does not exist")
+
+            print(input_text)
+            print(expected_output)
+            print(your_output)
+
+            if len(your_output) != len(expected_output):
+                print("length are not equal")
+            else:
+                for i in range(len(your_output)):
+                    if your_output[i] != expected_output[i]:
+                        print("Character mismatch")
+
+            verdict = (your_output == expected_output)
+            print(verdict)
+
+            return render(request, 'pages/submission.html', {'problem': problem,
+                                                             'compiled': compiled,
+                                                             'input_text': coded_input_text,
+                                                             'return_code': output.returncode,
+                                                             'expected_output': expected_output,
+                                                             'your_output': your_output,
+                                                             'verdict': verdict,
+                                                             'code_text': code_text
+                                                             })
+        return render(request, 'pages/submission.html', {'problem': problem,
+                                                         'compiled': compiled,
+                                                         'input_text': coded_input_text,
+                                                         'return_code': output.returncode,
+                                                         'expected_output': expected_output,
+                                                         'error_message': output.stderr,
+                                                         'code_text': code_text
+                                                         })
+
+    return render(request, 'pages/submission.html', {'problem': problem, 'compiled': compiled,
+                                                     'code_text': code_text})

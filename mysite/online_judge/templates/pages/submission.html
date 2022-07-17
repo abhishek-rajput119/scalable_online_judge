@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        window.onload = function(){
+                            document.getElementById('outputWindow').click();
+                        }
+    </script>
     <title>Submission Page</title>
 </head>
 
@@ -25,7 +31,7 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="profile">Profile</a>
+                        <a class="nav-link active" aria-current="page" href="profile">{{ user.username }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/online_judge/logout">Logout</a>
@@ -84,74 +90,67 @@
                             Language
                             <select name="language " id="id_language ">
                               <option value=" ">---------</option>
-
-                              <option value="43 ">GNU GCC C11 5.1.0</option>
-
-                              <option value="52 ">Clang++17 Diagnostics</option>
-
-                              <option value="50 ">GNU G++14 6.4.0</option>
-
                               <option value="54 " selected>GNU G++17 7.3.0</option>
 
                               <option value="59 ">Microsoft Visual C++ 2017</option>
 
                               <option value="61 ">GNU G++17 9.2.0 (64 bit, msys 2)</option>
-
-                              <option value="9 ">C# Mono 5.18</option>
-
-                              <option value="28 ">D DMD32 v2.091.0</option>
-
-                              <option value="32 ">Go 1.15.6</option>
-
-                              <option value="12 ">Haskell GHC 8.6.3</option>
-
-                              <option value="60 ">Java 11.0.5</option>
-
-                              <option value="36 ">Java 1.8.0_162</option>
-
-                              <option value="48 ">Kotlin 1.3.70</option>
-
-                              <option value="19 ">OCaml 4.02.1</option>
-
-                              <option value="3 ">Delphi 7</option>
-
-                              <option value="4 ">Free Pascal 3.0.2</option>
-
-                              <option value="51 ">PascalABC.NET 3.4.2</option>
-
-                              <option value="13 ">Perl 5.20.1</option>
-
-                              <option value="6 ">PHP 7.2.13</option>
-
-                              <option value="7 ">Python 2.7.15</option>
-
-                              <option value="31 ">Python 3.7.2</option>
-
-                              <option value="40 ">PyPy 2.7 (7.2.0)</option>
-
-                              <option value="41 ">PyPy 3.6 (7.2.0)</option>
-
-                              <option value="49 ">Rust 1.42.0</option>
-
-                              <option value="20 ">Scala 2.12.8</option>
-
-                              <option value="34 ">JavaScript V8 4.8.0</option>
-
-                              <option value="55 ">Node.js 9.4.0</option>
-
                         </select>
                         </div>
                     </div>
-                    <div class="form-outline my-4 ">
-                        <form action=" " method="post">
-                            <textarea class="form-control " rows="15 "></textarea>
-                            <button class="btn btn-success btn-md my-2 " type=" submit ">Submit</button>
+                    <div class="form-outline my-4">
+                        <form role="form" enctype="multipart/form-data" method="post">
+                            {% csrf_token %}
+                            <textarea name="code" class="form-control " rows="15">{{ code_text }}</textarea>
+                            <button class="btn btn-success btn-md my-2 " type="submit ">Submit</button>
+                            {% if compiled %}
+                            <button id="outputWindow" class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Output Window</button>
+                            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                              <div class="offcanvas-header">
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                              </div>
+                              <div class="offcanvas-body">
+                                <div class="card">
+                                        <div class="card-body ">
+                                            {% if return_code == 1 %}
+                                                <h5 class="card-title" style="color : red;"><strong>Compilation Error</strong></h5>
+                                            {% else %}
+                                                <h5 class="card-title" style="color : green;"><strong>Compiled Successfully</strong></h5>
+                                                <br>
+                                                 {% if verdict %}
+                                                    <h5 class="card-subtitle" style="color : green;">Accepted</h5>
+                                                 {% else %}
+                                                    <h5 class="card-subtitle" style="color : red;">Wrong Answer</h5>
+                                                 {% endif %}
+                                            {% endif %}
+                                            <br>
+                                            <h6 class="card-subtitle mb-2 ">Input:</h6>
+                                            {% for i in input_text %}
+                                            <h6 class="card-subtitle mb-2 text-muted ">{{ i }}</h6>
+                                            {% endfor %}
+                                            <br>
+                                            <h6 class="card-subtitle mb-2">Expected Output:</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted ">{{ expected_output }}</h6>
+                                            <br>
+                                            <h6 class="card-subtitle mb-2">Your Output:</h6>
+                                            {% if return_code == 1 %}
+                                                <h6 class="card-subtitle mb-2 text-muted ">{{ error_message }}</h6>
+                                            {% else %}
+                                                <h6 class="card-subtitle mb-2 text-muted ">{{ your_output }}</h6>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                        {% endif %}
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
