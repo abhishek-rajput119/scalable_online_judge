@@ -104,7 +104,13 @@ def submission(request, problem_id):
         output = subprocess.run(['docker', 'exec', '764361bc5ec4', 'g++', 'a.cpp'], shell=True,
                                 capture_output=True, text=True)
 
+        if os.path.exists(f"codes/{user.id}_{problem_id}.cpp"):
+            os.remove(f"codes/{user.id}_{problem_id}.cpp")
+        else:
+            print("The file does not exist")
+
         print(output.stderr)
+
         if output.returncode == 0:
             out = subprocess.run(['docker', 'exec', '-i', '764361bc5ec4', './a.out'], shell=True, capture_output=True,
                                  text=True, input=input_text)
@@ -123,10 +129,7 @@ def submission(request, problem_id):
             else:
                 print("The file does not exist")
 
-            if os.path.exists(f"codes/{user.id}_{problem_id}.cpp"):
-                os.remove(f"codes/{user.id}_{problem_id}.cpp")
-            else:
-                print("The file does not exist")
+
 
             print(input_text)
             print(expected_output)
