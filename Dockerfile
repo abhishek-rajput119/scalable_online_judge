@@ -4,10 +4,10 @@ FROM python:3.8-slim-buster
 
 WORKDIR /app
 
-COPY mysite1/requirements.txt requirements.txt
+COPY mysite/requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY mysite1 .
+COPY mysite .
 
 EXPOSE 8000
 
