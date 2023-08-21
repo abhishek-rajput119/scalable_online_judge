@@ -4,16 +4,16 @@ Online judge for programmers, where they can solve problems and submit there cod
 PROJECT DESIGN BREAKDOWN 
 AIM: Build a scalable OJ for coders  
  
-UI screens/routes (Task 1) {4-5 days}:  
+UI screens/routes:  
   Login Page: To authorize the user for login  
   Admin Page: Some extended features for admin (Using default Django admin). 
   Home Page: Has a list of problems and a filter option to sort them based on solved status or difficulty. 
   
   Problems Page: When clicked on any problem on the above page, takes you here; this page has the problem name, description, input field to code, selection dropdown                  to pick programming language, submit button and a dynamic banner to display the verdict. 
   Submission Page: Linked to the Problems page, which takes you to view your submissions of that particular problem. Shows submission time-stamps for each                              submission. 
-  [Bonus] Profile Page : To display the basic information, performance ,score and problems solved by logged in user. 
+  [Not designed yet] Profile Page : To display the basic information, performance ,score and problems solved by logged in user. 
  
-Design and configure Database (SQL)(Task 2) {3-4 days}:  
+Design and configure Database (SQL):
   ● Users:  
     UserId(default)  
     User_name 
@@ -34,8 +34,7 @@ Design and configure Database (SQL)(Task 2) {3-4 days}:
     ○ Timestamp: Date  
     ○ Verdict: CharField  
  
- 
-Design RESTful APIS(Task 3){2-3 days}:  
+ RESTful APIS:  
 
 1. GET: problem sorting API with pagination-10 to sort problems based on solved status or difficulty.   
 2.  POST : submit solution API  
@@ -46,7 +45,7 @@ Design RESTful APIS(Task 3){2-3 days}:
 4. GET: fetch problems API in home page  
 5. GET: fetch the list of submission to a problem (prev submission)  
  
-Code evaluation system (Task 3) : 
+Code evaluation system : 
 
 docker : setup a docker container for the specific compiler(eg:- docker container  
           with GCC installed: https://hub.docker.com/_/gcc)  
