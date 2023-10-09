@@ -99,9 +99,9 @@ def submission(request, problem_id):
         expected_output = f.read().strip()
 
         # subprocess.run(['docker', 'ps'])
-        subprocess.run(['docker', 'cp', f'codes/{user.id}_{problem_id}.cpp', '764361bc5ec4:/a.cpp'], shell=True,
+        subprocess.run(['docker', 'cp', f'codes/{user.id}_{problem_id}.cpp', 'e45a78592bed:/a.cpp'], shell=True,
                        capture_output=True)
-        output = subprocess.run(['docker', 'exec', '764361bc5ec4', 'g++', 'a.cpp'], shell=True,
+        output = subprocess.run(['docker', 'exec', 'e45a78592bed', 'g++', 'a.cpp'], shell=True,
                                 capture_output=True, text=True)
 
         if os.path.exists(f"codes/{user.id}_{problem_id}.cpp"):
@@ -112,11 +112,11 @@ def submission(request, problem_id):
         print(output.stderr)
 
         if output.returncode == 0:
-            out = subprocess.run(['docker', 'exec', '-i', '764361bc5ec4', './a.out'], shell=True, capture_output=True,
+            out = subprocess.run(['docker', 'exec', '-i', 'e45a78592bed', './a.out'], shell=True, capture_output=True,
                                  text=True, input=input_text)
             print(out)
-            subprocess.run(['docker', 'exec', '764361bc5ec4', 'rm', '-rf', 'a.out'], shell=True)
-            subprocess.run(['docker', 'exec', '764361bc5ec4', 'rm', '-rf', 'a.cpp'], shell=True)
+            subprocess.run(['docker', 'exec', 'e45a78592bed', 'rm', '-rf', 'a.out'], shell=True)
+            subprocess.run(['docker', 'exec', 'e45a78592bed', 'rm', '-rf', 'a.cpp'], shell=True)
 
             with open(f"codes/outputs/{user.id}_{problem_id}.txt", "w") as f:
                 f.write(out.stdout)
